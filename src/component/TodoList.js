@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {TodosContext} from "../context/TodosContext.js"
 import { Button,Table } from 'reactstrap';
 
-function TodoList({todos,completeTodos,removeTodos}){
+
+function TodoList(){
+    const {todos, completeTodos,removeTodos} = useContext(TodosContext)
 
     return(
         <Table>
             <tbody>
             {todos && todos.map((todo, index) => (
             <tr key={index}>
-                <th className="text-left" style={{ textDecoration: todo.complete ? "line-though":"fire"}}>
+                <th 
+                className="text-left" 
+                style={{ textDecoration: todo.complete ? "line-through":""}}>
                 {todo.text}
                 </th>
                 <td
                 className="text-right" 
                 >
-                <Button color={todo.complete? "secondary":"success"} className="mr-2"
+                <Button 
+                color={todo.complete? "secondary":"success"} 
+                className="mr-2"
                 onClick={()=>completeTodos(index)}
                 >
                     {todo.complete ? "完了":"未完了"}
@@ -22,7 +29,9 @@ function TodoList({todos,completeTodos,removeTodos}){
                 <Button 
                     color="danger"
                     onClick ={() => removeTodos(index)}
-                >削除</Button>
+                >
+                    削除
+                </Button>
                 </td>
             </tr>
             ))}
